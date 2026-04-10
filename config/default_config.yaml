@@ -1,0 +1,75 @@
+# Diehl & Cook (2015) STDP Network Configuration
+# Default hyperparameters based on the paper
+# Some may be slightly changed
+
+# Network architecture
+network:
+  n_input: 784           # 28x28 MNIST pixels
+  n_excitatory: 400      # Number of excitatory neurons (start with 400)
+
+# Excitatory neuron parameters (conductance-based LIF)
+exc_neuron:
+  tau_membrane: 100.0    # ms increased from biological ~20ms for rate coding
+  e_rest: -65.0          # mV resting potential
+  e_exc: 0.0             # mV excitatory reversal potential
+  e_inh: -100.0          # mV inhibitory reversal potential
+  v_thresh: -52.0        # mV base firing threshold
+  v_reset: -65.0         # mV reset potential after spike
+  refrac_time: 5.0       # ms refractory period
+
+# Inhibitory neuron parameters
+inh_neuron:
+  tau_membrane: 10.0     # ms standard biological value
+  e_rest: -60.0          # mV
+  e_exc: 0.0             # mV
+  e_inh: -85.0           # mV
+  v_thresh: -40.0        # mV
+  v_reset: -45.0         # mV
+  refrac_time: 2.0       # ms
+
+# Homeostasis (adaptive threshold)
+homeostasis:
+  theta_increment: 0.05  # mV threshold increase on spike
+  tau_theta: 10000000.0  # ms very slow decay (~2.7 hours)
+
+# Synapse parameters
+synapse:
+  tau_ge: 1.0            # ms excitatory conductance time constant
+  tau_gi: 2.0            # ms inhibitory conductance time constant
+  w_max: 1.0             # Maximum plastic weight (input -> exc)
+  w_init_min: 0.0        # Initial weight range minimum
+  w_init_max: 0.3        # Initial weight range maximum
+  w_exc_inh: 10.0        # nS fixed excitatory to inhibitory weight
+  w_inh_exc: 17.0        # nS fixed inhibitory to excitatory weight
+
+# STDP parameters (power-law weight dependence)
+stdp:
+  eta: 0.0001            # Learning rate
+  x_tar: 0.4             # Target presynaptic trace value
+  mu: 0.2                # Weight dependence exponent
+  tau_pre: 20.0          # ms presynaptic trace time constant
+
+# Input encoding (Poisson spike trains)
+encoding:
+  max_rate: 63.75        # Hz maximum firing rate (255/4)
+  presentation_time: 250.0  # ms time to present each image - was 350
+  rest_time: 150.0       # ms rest period between images
+  min_spikes: 5          # Minimum spikes required
+  rate_increment: 32.0   # Hz rate increase if min_spikes not reached
+
+# Simulation parameters
+simulation:
+  dt: 1.0                # ms simulation timestep, typically overwritten to 0.5 for experiements
+  device: "cuda"         # Device: "cuda" or "cpu"
+
+# Training parameters
+training:
+  n_epochs: 3            # Number of passes through training set (for 400 neurons)
+  save_interval: 10000   # Save checkpoint every N images
+  log_interval: 1000     # Log progress every N images
+
+# Paths
+paths:
+  data_dir: "./data"
+  checkpoint_dir: "./checkpoints"
+  log_dir: "./logs"
