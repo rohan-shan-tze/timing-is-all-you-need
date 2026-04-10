@@ -9,8 +9,8 @@ The goal is to show that the network size can be reduced from 6400 neurons while
 Currently it has been shown that 30 neurons can achieve 75% accuracy.\
 More experiments are being run to see if this can be improved via tuning hyperparameters
 
-Additionally, other architectural choices have been explored, such as Difference of Gaussian preprocessing and a small Linear Regression readout layer, although these particular changes were needed to achieve 75% with 30 neurons.
+Additionally, other architectural choices have been explored, such as Difference of Gaussian preprocessing and a small Linear Regression readout layer, although these particular changes were not needed to achieve 75% with 30 neurons.
 
-This project was undertaken as part of my third year dissertation project at the University of Manchester's Computer Science Bsc(Hons) course.
+This project was undertaken as part of my third year dissertation work at the University of Manchester's Computer Science Bsc (Hons) course.
 
 Much thanks to my supervisor Luca Peres, my friends and family.
